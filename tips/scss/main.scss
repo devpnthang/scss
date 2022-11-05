@@ -1,0 +1,81 @@
+@import "./reset";
+@import "./_variables.scss";
+
+// :root {
+//   --primary-color: #272727;
+//   --accent-color: #ff652f;
+//   --text-color: #fff;
+// }
+
+// function
+@function weight($weight-name) {
+  @return map-get($font-weights, $weight-name);
+}
+
+// mixin
+@mixin flexCenter($direction) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+}
+
+@mixin theme($light-theme: true) {
+  @if $light-theme {
+    background: lighten($primary-color, 100%);
+    color: darken($color: $text-color, $amount: 100%);
+  }
+}
+
+@mixin mobile() {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+body {
+  // background: var(--accent-color);
+  background: $primary-color;
+  color: $text-color;
+}
+
+.light {
+  @include theme(true);
+}
+
+.main {
+  @include flexCenter(row);
+  width: calc(90% - 10px);
+  margin: 10px auto;
+
+  // .main__paragraph {
+  //   font-weight: map-get($font-weights, regular);
+  // }
+
+  // &__paragraph {
+  //   font-weight: map-get($font-weights, regular);
+  // }
+
+  #{&}__paragraph1 {
+    // font-weight: map-get($font-weights, regular);
+    font-weight: weight(medium);
+    transition: color .2s ease-in-out;
+
+    &:hover {
+      color: $accent-color;
+    }
+  }
+
+  #{&}__paragraph2 {
+    @extend .main__paragraph1;
+
+    &:hover {
+      color: $hover-color;
+    }
+  }
+
+  @include mobile {
+    // flex-direction: column;
+    @include flexCenter(column);
+  }
+}
